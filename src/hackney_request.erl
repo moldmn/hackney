@@ -554,8 +554,7 @@ make_multipart_stream(Parts, Boundary) ->
                            Len = byte_size(Bin),
                            {MpHeader, _} = hackney_multipart:mp_data_header(
                              {Name, Len}, Boundary),
-                           PartBin = << MpHeader/binary, Bin/binary, "\r\n" >>,
-                           [PartBin | Acc];
+                           [<<"\r\n">>, Bin, MpHeader | Acc];
                          ({Name, Bin, ExtraHeaders}, Acc) ->
                            Len = byte_size(Bin),
                            {MpHeader, _} = hackney_multipart:mp_data_header(
